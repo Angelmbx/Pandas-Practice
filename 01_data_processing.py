@@ -70,8 +70,33 @@ education_mapping = {
     "Bachelors" : "Bachelor",
     "mastre" : "Master",
     "pHd" : "PhD",
-    "no education" : "None"
+    "no education" : "NE"
 }
 
 df["Nivel_Educación"].replace(education_mapping, inplace=True) # Corrige los errores en esa columna
+df["Nivel_Educación"].fillna("NE", inplace=True) # Sustituye los nulos por "NE"
+
+## 4 Casteo de tipos -> Convertimos los datos de cada columna a los tipos que realmente queremos 
+df["Edad"] = df["Edad"].astype(int)
+df["Hijos"] = df["Hijos"].astype(int)
+df["Ingresos"] = df["Ingresos"].astype(float)
+df["Altura"] = df["Altura"].astype(float)
+
+print(df.info())
+
+'''
+Ahora ya no muestra valores no nulos
+
+ #   Column           Non-Null Count   Dtype  
+---  ------           --------------   -----  
+ 0   Edad             100000 non-null  int64  
+ 1   Género           100000 non-null  object 
+ 2   Ingresos         100000 non-null  float64
+ 3   Altura           100000 non-null  float64
+ 4   Ciudad           100000 non-null  object 
+ 5   Nivel_Educación  100000 non-null  object 
+ 6   Hijos            100000 non-null  int64  
+dtypes: float64(2), int64(2), object(3)
+memory usage: 6.1+ MB
+'''
 
