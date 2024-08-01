@@ -57,13 +57,14 @@ df["Hijos"] = df["Hijos"].apply(lambda x: np.nan if x<0 else x)
 ## 2 Imputar valores faltantes
 for column in ["Edad", "Ingresos", "Hijos"]:
     median_value = df[column].median() # Para cada una de esas columnas, obtenemos su valor medio
-    df[column].fillna(median_value, inplace=True) # Para cada columna, allá donde haya un valor NaN lo sustiuremos por su valor medio 
+    df.fillna({column: median_value}, inplace= True) # Para cada columna, allá donde haya un valor NaN lo sustiuremos por su valor medio 
     # el inplace = True, provoca que se modifique el objeto original. Si está a False, crea una copia con los valores modificados
     # Cuando inplace = True no es necesario guardarlo en una nueva variable. Si fuera false es obligatorio guardarlo en una variable para recibir la copia del objeto: variable = df.metodo(inplace=False)
 
 for column in["Género", "Ciudad"]:
     mode_value = df[column].mode()[0] # obtenemos el valor que mas se repite para la columna (la moda). Posición 0 porque primero te devuelve el valor, y en segunda posición cuántas veces se repite
-    df[column].fillna(median_value, inplace=True) # sustuimos los valores NaN por la moda
+    df.fillna({column: median_value}, inplace= True) # sustuimos los valores NaN por la moda
+
 
 ## 3 Mapeo de datos -> Corrección de erratas
 education_mapping = {
@@ -73,8 +74,11 @@ education_mapping = {
     "no education" : "NE"
 }
 
-df["Nivel_Educación"].replace(education_mapping, inplace=True) # Corrige los errores en esa columna
-df["Nivel_Educación"].fillna("NE", inplace=True) # Sustituye los nulos por "NE"
+
+df.replace({"Nivel_Educación": education_mapping}, inplace= True) # Corrige los errores en esa columna
+df.fillna({"Nivel_Educación": "NE"}, inplace= True) # Sustituye los nulos por "NE"
+
+
 
 ## 4 Casteo de tipos -> Convertimos los datos de cada columna a los tipos que realmente queremos 
 df["Edad"] = df["Edad"].astype(int)

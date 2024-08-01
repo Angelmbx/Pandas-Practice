@@ -41,7 +41,6 @@ def remove_outliers_with_zscore(df, column, threshold = 2): # threshold: umbral 
 # 3) Función para realizar mapeos de datos
 def map_column_values(df, column, mapping_dict): 
     # mapping_dict: Un diccionario que contiene los mapeos de los valores originales a los nuevos valores. Las claves son los valores originales y los valores del diccionario son los valores nuevos.
-    
     df[column] = df[column].apply(lambda value: mapping_dict.get(value, value)) 
     return df
 # a cada valor de la columna le aplicamos una lambda.
@@ -51,7 +50,7 @@ def map_column_values(df, column, mapping_dict):
 
 # 4) Función para rellenar todos aquellos datos NaN que haya tras nuestro tratamiento de datos
 def fill_na_in_column(df, column, fill_value):
-    df[column].fillna(fill_value, inplace= True)
+    df.fillna({column: fill_value}, inplace= True)
     return df
 
 def preprocess_data(df):
